@@ -1,5 +1,5 @@
 #PBS -l walltime=48:00:00
-#PBS -l select=2:ncpus=48:mem=20gb:mpiprocs=48
+#PBS -l select=1:ncpus=24:mem=20gb:mpiprocs=24
 
 # above lines: 
 # walltime = estimated running time, sensible values: 30 mins, 24 h, 72 h
@@ -19,6 +19,6 @@ export NUMEXPR_NUM_THREADS=1
 export OMP_NUM_THREADS=1
 
 cd "$PBS_O_WORKDIR"
-mpiexec -n 96 python run_simulation.py input_OCP_Gamma_10.txt 0
+mpiexec python run_simulation.py input_OCP_Gamma_10.txt 0
 
 conda deactivate 
