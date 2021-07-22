@@ -43,7 +43,7 @@
   0.01
 # tEqm: simulation time for equilibration stage
 # float
-  10.
+  1000.
 # NReps, tInt, tLength, tFreq, NEvery:
 # NReps: The number of repetitions of VACF computes in a single trajectory,
 # it is also the number of time origins
