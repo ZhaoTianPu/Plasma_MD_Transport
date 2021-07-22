@@ -1,0 +1,24 @@
+#PBS -l walltime=48:00:00
+#PBS -l select=2:ncpus=48:mem=20gb:mpiprocs=48
+
+# above lines: 
+# walltime = estimated running time, sensible values: 30 mins, 24 h, 72 h
+# select = number of computer nodes, ncpus = number of cores in one node
+# mem = memory per node, mpiprocs = MPI processors per node, less than ncpus value
+# The second line inputs need to follow specific combinations, for details, see:
+# https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/computing/job-sizing-guidance/  
+
+# load modules required           
+module load anaconda3/personal
+source activate test
+module load mpi/intel-2019
+module load intel-suite/2020.2
+
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+
+cd "$PBS_O_WORKDIR"
+mpiexec python run_simulation.py input_OCP_Gamma_10.txt 0
+
+conda deactivate 

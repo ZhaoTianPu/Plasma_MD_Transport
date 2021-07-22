@@ -1,0 +1,95 @@
+#-----------------------------------------------------------------------------#
+#                                                                             #
+#                             input.txt                                       #
+#     Tianpu Zhao (TPZ), pacosynthesis@gmail.com, tz1416@ic.ac.uk             # 
+#                                                                             #
+#-----------------------------------------------------------------------------#
+# Description: A input file that specifies all the simulation details, to be  #
+# read by ReadInput module. If the structure of this input file is changed,   #
+# the corresponding file reading function need also to be adjusted.           #
+# All the simulation units are in LJ by default, although the input file and  #
+# the code can be used with any other units as well.                          #
+#-----------------------------------------------------------------------------#
+# Reference:                                                                  #
+# [1]: Shaffer et al. PRE 95 013206 (2017)                                    #
+#-----------------------------------------------------------------------------#
+# File directory: relative to the directory where the code and this input is
+# string, put . for the current folder
+  ./OCP_Gamma_10
+#-----------------------------------------------------------------------------#
+# Mode of the simulation: "pure" for pure fluid, "binary" for binary mixture 
+# string 
+  pure
+# PairStyle: "poly" for polynomial potential w/ cutoff, "Coul" for Coulombic
+# string
+  Coul
+# NDim: Dimensionality, 2 or 3
+# int
+  3
+#-----------------------------------------------------------------------------#
+# Species 1 info: species 1 must have the smallest mass
+# mass    | charge    | number
+# float   | float     | int
+  1.        1.          1024       
+# Species 2 info: neglect if mode of the simulation is "pure"                  
+# mass    | charge    | number
+# float   | float     | int
+  2.        1.          5000 
+#-----------------------------------------------------------------------------#
+# Simulation time, VACF and PCACF settings:
+# tStep: timestep measured in tau                      for PairStyle "poly" 
+#                          in plasma time of species 1 for PairStyle "Coul"
+# float
+  0.01
+# tEqm: simulation time for equilibration stage
+# float
+  10.
+# NReps, tInt, tLength, tFreq, NEvery:
+# NReps: The number of repetitions of VACF computes in a single trajectory,
+# it is also the number of time origins
+# tInt: The time between each VACF origin
+# tLength: The length (in time) of a single VACF and PCACF
+# tFreq: The interval (in time) between averages of PCACF to be evaluated and
+# reported
+# NEvery: The number of timesteps between subsequent VACF and PCACF calculations,
+# can be interpreted as "sample VACF/PCACF every NEvery steps"
+# NReps        | tInt       | tLength      | tFreq          | NEvery 
+# int          | float      | float        | float          | int
+  30             1000.        1000.          1000.            1
+#-----------------------------------------------------------------------------#
+# File names:
+# EqmLogStem, ProdLogStem, FileStem:
+# File names for
+# setup and equilibrium stage log: {EqmLogStem}_{iTraj}.txt
+# production stage log           : {ProdLogStem}_{iTraj}.txt
+# VACF and self-diffusion file   : {FileStem}_{iTraj}_Dii_Type{iType}_{iRep}.txt
+# PCACF file                     : {FileStem}_{iTraj}_D12.txt
+# EqmLogStem          | ProdLogStem            | FileStem
+# string              | string                 | string
+  Eqm_OCP_Gamma_10      Prod_OCP_Gamma_10 OCP
+#-----------------------------------------------------------------------------# 
+# cutoff: 
+# for "poly": in sigma, potential cutoff in sigma
+# for "Coul": in Wigner-Seitz radius, cutoff between direct and inverse space
+# potential treatment
+# float
+  5.
+#-----------------------------------------------------------------------------#
+# PairStyle-specific parameters:
+# For "Coul", if PairStyle is "poly" then this block is ignored:
+# Gamma: Coupling parameter, depending on the GammaMode
+# GammaMode: Gamma0 for eq. (3) in [1], Gamma for eq. (2) in [1]
+# NGrids: Number of grids on each dimension for PPPM scheme
+# GammaMode   | Gamma       | NGrids
+# string      | float       | int
+  Gamma        10            50 
+# For "poly", if PairStyle is "Coul" then this block is ignored:
+# numden: reduced total number density
+# float
+  1.
+# polyCoeff: coefficients of polynomial terms in descending order, begin with 
+# the constant term (and following with the terms r^-1, r^-2, etc.) 
+# r^0  | r^-1  | r^-2  | r^-3  | r^-4  | r^-5  | r^-6 | etc.    
+# all float  
+  0.     0.      0.      0.      1.                         
+#-----------------------------------------------------------------------------#
