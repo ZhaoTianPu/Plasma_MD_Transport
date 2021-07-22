@@ -200,7 +200,7 @@ def OCP_BIM_D(sim, iTraj, neigh_one = 5000, neigh_page = 50000):
   L.units("lj")
   L.dimension(NDim)
   L.boundary("p p p")
-  L.processors("* * *")
+  L.processors("2 5 5")
 
   if PairStyle == "Coul":
     L.atom_style("charge")
