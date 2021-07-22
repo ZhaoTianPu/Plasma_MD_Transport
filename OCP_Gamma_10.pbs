@@ -19,6 +19,6 @@ export NUMEXPR_NUM_THREADS=1
 export OMP_NUM_THREADS=1
 
 cd "$PBS_O_WORKDIR"
-mpiexec python run_simulation.py input_OCP_Gamma_10.txt 0
+mpiexec -n 96 python run_simulation.py input_OCP_Gamma_10.txt 0
 
 conda deactivate 
